@@ -37,3 +37,18 @@ Edit `apps/<app-id>/app.json` or the hand-written part of the app's
 
 To regenerate by hand: **Actions > Update catalog > Run workflow**, or locally
 `node scripts/build-catalog.mjs` (Node 20+).
+
+## Getting projects from your PC onto GitHub
+
+`tools/push-pc-projects.ps1` puts every project folder under one parent
+folder onto GitHub as a private repository (or pushes unpushed commits for
+ones already there). Run it once without `-Go` to see the plan, then with it:
+
+```powershell
+.\tools\push-pc-projects.ps1 -Root "$HOME\source\repos"
+.\tools\push-pc-projects.ps1 -Root "$HOME\source\repos" -Go
+```
+
+It skips projects with uncommitted changes or files that look like secrets
+and lists them so you can deal with them by hand. Built installers still go
+to this repository's Releases as described above.
