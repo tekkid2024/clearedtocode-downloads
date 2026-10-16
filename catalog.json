@@ -1,0 +1,184 @@
+{
+  "repo": "tekkid2024/clearedtocode-downloads",
+  "howToUse": "apps[].latest is the newest stable release of each app; apps[].releases lists every version, newest first.",
+  "apps": [
+    {
+      "id": "airline-hub",
+      "title": "ClearedToCode Airline Hub Suite",
+      "summary": "Virtual Airlines, CTC Aircraft Maintenance, Airport Emergencies and Vantage cameras in one tablet app.",
+      "platform": "MSFS 2024 · Windows 10/11 (64-bit)",
+      "category": "Add-on",
+      "license": "Free 3-hour demo; a serial from clearedtocode.com unlocks it.",
+      "order": 1,
+      "page": "https://github.com/tekkid2024/clearedtocode-downloads/tree/main/apps/airline-hub",
+      "latest": {
+        "version": "1.1.1",
+        "tag": "airline-hub-v1.1.1",
+        "name": "ClearedToCode Airline Hub Suite 1.1.1",
+        "publishedAt": "2026-10-16T06:33:00Z",
+        "prerelease": false,
+        "url": "https://github.com/tekkid2024/clearedtocode-downloads/releases/tag/airline-hub-v1.1.1",
+        "assets": [
+          {
+            "name": "ClearedToCode-Airline-Hub-Suite-Setup-1.1.1.exe",
+            "size": 223903744,
+            "sha256": "ce9530404427f4a094e46c00dee38ab6b64ff08d4744829dcf67f928d4f39c26",
+            "url": "https://github.com/tekkid2024/clearedtocode-downloads/releases/download/airline-hub-v1.1.1/ClearedToCode-Airline-Hub-Suite-Setup-1.1.1.exe"
+          },
+          {
+            "name": "SHA256SUMS.txt",
+            "size": 114,
+            "sha256": "9d049b7b3f4b2cade860f786ba5914efc482e910c5e0dab8bda06581e4ff14e0",
+            "url": "https://github.com/tekkid2024/clearedtocode-downloads/releases/download/airline-hub-v1.1.1/SHA256SUMS.txt"
+          }
+        ]
+      },
+      "releases": [
+        {
+          "version": "1.1.1",
+          "tag": "airline-hub-v1.1.1",
+          "name": "ClearedToCode Airline Hub Suite 1.1.1",
+          "publishedAt": "2026-10-16T06:33:00Z",
+          "prerelease": false,
+          "url": "https://github.com/tekkid2024/clearedtocode-downloads/releases/tag/airline-hub-v1.1.1",
+          "assets": [
+            {
+              "name": "ClearedToCode-Airline-Hub-Suite-Setup-1.1.1.exe",
+              "size": 223903744,
+              "sha256": "ce9530404427f4a094e46c00dee38ab6b64ff08d4744829dcf67f928d4f39c26",
+              "url": "https://github.com/tekkid2024/clearedtocode-downloads/releases/download/airline-hub-v1.1.1/ClearedToCode-Airline-Hub-Suite-Setup-1.1.1.exe"
+            },
+            {
+              "name": "SHA256SUMS.txt",
+              "size": 114,
+              "sha256": "9d049b7b3f4b2cade860f786ba5914efc482e910c5e0dab8bda06581e4ff14e0",
+              "url": "https://github.com/tekkid2024/clearedtocode-downloads/releases/download/airline-hub-v1.1.1/SHA256SUMS.txt"
+            }
+          ]
+        },
+        {
+          "version": "1.1.0",
+          "tag": "airline-hub-v1.1.0",
+          "name": "ClearedToCode Airline Hub Suite 1.1.0",
+          "publishedAt": "2026-10-15T23:06:47Z",
+          "prerelease": false,
+          "url": "https://github.com/tekkid2024/clearedtocode-downloads/releases/tag/airline-hub-v1.1.0",
+          "assets": [
+            {
+              "name": "ClearedToCode-Airline-Hub-Suite-Owners-Manual-1.1.0.pdf",
+              "size": 18767845,
+              "sha256": "dcd48951d342ad0622616ac1262558bcdaff67ea5c1fd750f6c9c5dccf33e4c2",
+              "url": "https://github.com/tekkid2024/clearedtocode-downloads/releases/download/airline-hub-v1.1.0/ClearedToCode-Airline-Hub-Suite-Owners-Manual-1.1.0.pdf"
+            },
+            {
+              "name": "ClearedToCode-Airline-Hub-Suite-Setup-1.1.0.exe",
+              "size": 223898624,
+              "sha256": "e8215424e72e19d179c5e61bd2d1157f72f00894d82950a95dba21a2c0b25cb8",
+              "url": "https://github.com/tekkid2024/clearedtocode-downloads/releases/download/airline-hub-v1.1.0/ClearedToCode-Airline-Hub-Suite-Setup-1.1.0.exe"
+            },
+            {
+              "name": "SHA256SUMS.txt",
+              "size": 236,
+              "sha256": "b90b1b0fa2f3758240e3753617565a6e89da2ac0c1e90f8f09d5e46693c85a0d",
+              "url": "https://github.com/tekkid2024/clearedtocode-downloads/releases/download/airline-hub-v1.1.0/SHA256SUMS.txt"
+            }
+          ]
+        },
+        {
+          "version": "1.0.0",
+          "tag": "airline-hub-v1.0.0",
+          "name": "ClearedToCode Airline Hub 1.0.0",
+          "publishedAt": "2026-10-15T06:28:41Z",
+          "prerelease": false,
+          "url": "https://github.com/tekkid2024/clearedtocode-downloads/releases/tag/airline-hub-v1.0.0",
+          "assets": [
+            {
+              "name": "ClearedToCode-Airline-Hub-Owners-Manual-1.0.0.pdf",
+              "size": 16867537,
+              "sha256": "3942f88f60b09f58d047bb29732dd6cd23644e17e2a0db226c3b6c59d1779a9d",
+              "url": "https://github.com/tekkid2024/clearedtocode-downloads/releases/download/airline-hub-v1.0.0/ClearedToCode-Airline-Hub-Owners-Manual-1.0.0.pdf"
+            },
+            {
+              "name": "ClearedToCode-Airline-Hub-Setup-1.0.0.exe",
+              "size": 162514944,
+              "sha256": "4d65c1c04c257a68bd527d22f277503df1065654823d1000d2cf3628591177d7",
+              "url": "https://github.com/tekkid2024/clearedtocode-downloads/releases/download/airline-hub-v1.0.0/ClearedToCode-Airline-Hub-Setup-1.0.0.exe"
+            },
+            {
+              "name": "SHA256SUMS.txt",
+              "size": 224,
+              "sha256": "58ad29c1a3e5ecd7967ddf7d0736ae2ebbdccb1e944cb6dcebc0eab9ed08e5bb",
+              "url": "https://github.com/tekkid2024/clearedtocode-downloads/releases/download/airline-hub-v1.0.0/SHA256SUMS.txt"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vantage",
+      "title": "ClearedToCode Vantage",
+      "summary": "Camera add-on: tower, runway, fly-by, chase and orbit cams, level horizon, saved views, hotkeys and a Stream Deck plugin.",
+      "platform": "MSFS 2024 · Windows",
+      "category": "Add-on",
+      "order": 2,
+      "page": "https://github.com/tekkid2024/clearedtocode-downloads/tree/main/apps/vantage",
+      "latest": {
+        "version": "1.0.8",
+        "tag": "vantage-v1.0.8",
+        "name": "ClearedToCode Vantage 1.0.8",
+        "publishedAt": "2026-10-16T06:18:34Z",
+        "prerelease": false,
+        "url": "https://github.com/tekkid2024/clearedtocode-downloads/releases/tag/vantage-v1.0.8",
+        "assets": [
+          {
+            "name": "ClearedToCode-Vantage-1.0.8.zip",
+            "size": 63814572,
+            "sha256": "3377dd907d4c1bf58b0215423eac57afb6082d422e8a999bfa3ab3a6e8590466",
+            "url": "https://github.com/tekkid2024/clearedtocode-downloads/releases/download/vantage-v1.0.8/ClearedToCode-Vantage-1.0.8.zip"
+          },
+          {
+            "name": "SHA256SUMS.txt",
+            "size": 98,
+            "sha256": "6d5b981a331f2338f1ad84f2369842d2961d55d9ef493c2aee2934e6ef3ac1a1",
+            "url": "https://github.com/tekkid2024/clearedtocode-downloads/releases/download/vantage-v1.0.8/SHA256SUMS.txt"
+          }
+        ]
+      },
+      "releases": [
+        {
+          "version": "1.0.8",
+          "tag": "vantage-v1.0.8",
+          "name": "ClearedToCode Vantage 1.0.8",
+          "publishedAt": "2026-10-16T06:18:34Z",
+          "prerelease": false,
+          "url": "https://github.com/tekkid2024/clearedtocode-downloads/releases/tag/vantage-v1.0.8",
+          "assets": [
+            {
+              "name": "ClearedToCode-Vantage-1.0.8.zip",
+              "size": 63814572,
+              "sha256": "3377dd907d4c1bf58b0215423eac57afb6082d422e8a999bfa3ab3a6e8590466",
+              "url": "https://github.com/tekkid2024/clearedtocode-downloads/releases/download/vantage-v1.0.8/ClearedToCode-Vantage-1.0.8.zip"
+            },
+            {
+              "name": "SHA256SUMS.txt",
+              "size": 98,
+              "sha256": "6d5b981a331f2338f1ad84f2369842d2961d55d9ef493c2aee2934e6ef3ac1a1",
+              "url": "https://github.com/tekkid2024/clearedtocode-downloads/releases/download/vantage-v1.0.8/SHA256SUMS.txt"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flightdeck-bridge",
+      "title": "FlightDeck Bridge",
+      "summary": "vPilot plugin that puts your VATSIM messages, ATIS, METAR, Hoppie CPDLC and a radio kneeboard on a tablet or phone.",
+      "platform": "Windows · vPilot",
+      "category": "Plugin",
+      "order": 3,
+      "page": "https://github.com/tekkid2024/clearedtocode-downloads/tree/main/apps/flightdeck-bridge",
+      "latest": null,
+      "releases": []
+    }
+  ]
+}

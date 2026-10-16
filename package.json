@@ -1,0 +1,10 @@
+{
+  "name": "clearedtocode-downloads",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "catalog": "node scripts/build-catalog.mjs",
+    "test": "node --test"
+  }
+}

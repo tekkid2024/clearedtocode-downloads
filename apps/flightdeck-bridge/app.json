@@ -1,0 +1,8 @@
+{
+  "id": "flightdeck-bridge",
+  "title": "FlightDeck Bridge",
+  "summary": "vPilot plugin that puts your VATSIM messages, ATIS, METAR, Hoppie CPDLC and a radio kneeboard on a tablet or phone.",
+  "platform": "Windows · vPilot",
+  "category": "Plugin",
+  "order": 3
+}

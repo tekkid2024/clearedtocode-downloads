@@ -1,0 +1,38 @@
+name: Update catalog
+
+on:
+  release:
+    types: [published, edited, deleted, prereleased, released, unpublished]
+  push:
+    branches: [main]
+    paths: ['apps/**', 'scripts/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-catalog
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm test
+      - run: node scripts/build-catalog.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit changes
+        run: |
+          if git diff --quiet; then echo "Catalog already up to date"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898299+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Update catalog"
+          git push
