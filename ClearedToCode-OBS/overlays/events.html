@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Latest events</title>
+<link rel="stylesheet" href="css/overlay.css">
+</head>
+<body>
+<!-- OBS browser source size: 820 x 96.
+     Latest sub, cheer and raid update live from your Twitch channel. -->
+<div class="events panel" id="bar">
+  <div class="slot" id="sub" style="--c: var(--accent-2)">
+    <div class="slot-icon"></div>
+    <div class="slot-body"><div class="kicker">Sub<b></b></div><div class="slot-value">—</div></div>
+  </div>
+  <div class="slot" id="cheer" style="--c: #c79bff">
+    <div class="slot-icon"></div>
+    <div class="slot-body"><div class="kicker">Cheer<b></b></div><div class="slot-value">—</div></div>
+  </div>
+  <div class="slot" id="raid" style="--c: var(--accent)">
+    <div class="slot-icon"></div>
+    <div class="slot-body"><div class="kicker">Raid<b></b></div><div class="slot-value">—</div></div>
+  </div>
+  <div class="toast" id="toast">
+    <div id="toast-icon"></div>
+    <div style="min-width:0">
+      <div class="kicker" id="toast-kicker"></div>
+      <div class="toast-text" id="toast-text"></div>
+    </div>
+  </div>
+</div>
+<script src="../config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/twitch.js"></script>
+<script>
+  const { icons, store } = CTC;
+  const ICON = { sub: icons.star, cheer: icons.gem, raid: icons.raid };
+  for (const k in ICON) document.querySelector('#' + k + ' .slot-icon').innerHTML = ICON[k];
+
+  const saved = store.get('events', {});
+  function setSlot(k, name, extra, flash) {
+    saved[k] = { name, extra };
+    store.set('events', saved);
+    const slot = document.getElementById(k);
+    slot.querySelector('.slot-value').textContent = name;
+    slot.querySelector('.kicker b').textContent = extra ? ' · ' + extra : '';
+    if (flash) {
+      slot.classList.remove('flash');
+      void slot.offsetWidth;
+      slot.classList.add('flash');
+    }
+  }
+  for (const k in saved) if (saved[k] && saved[k].name) setSlot(k, saved[k].name, saved[k].extra, false);
+
+  // One toast at a time; each stays up for 6 seconds.
+  const queue = [];
+  let busy = false;
+  const toast = document.getElementById('toast');
+  function announce(kind, kicker, text) {
+    queue.push({ kind, kicker, text });
+    if (!busy) next();
+  }
+  function next() {
+    const t = queue.shift();
+    if (!t) { busy = false; return; }
+    busy = true;
+    document.getElementById('toast-icon').innerHTML = ICON[t.kind];
+    document.getElementById('toast-kicker').textContent = t.kicker;
+    document.getElementById('toast-text').textContent = t.text;
+    toast.classList.add('show');
+    setTimeout(() => { toast.classList.remove('show'); setTimeout(next, 600); }, 6000);
+  }
+
+  // A mass gift is followed by one notice per gifted sub; skip those repeats.
+  const skipGifts = {};
+  const handlers = {
+    sub({ user, months }) {
+      setSlot('sub', user, months > 1 ? months + ' mo' : '', true);
+      announce('sub', months > 1 ? 'Resubscribed · ' + months + ' months' : 'New subscriber', user + ' joined the crew!');
+    },
+    gift({ user, login, recipient, count, single }) {
+      const key = (login || user).toLowerCase();
+      if (single && skipGifts[key] > 0) { skipGifts[key]--; return; }
+      if (!single) skipGifts[key] = count;
+      setSlot('sub', user, count > 1 ? 'gifted ' + count : 'gift', true);
+      announce('sub', 'Gifted subs', single ? user + ' gifted a sub to ' + recipient : user + ' gifted ' + count + ' subs!');
+    },
+    cheer({ user, bits }) {
+      setSlot('cheer', user, bits + ' bits', true);
+      announce('cheer', 'Cheer · ' + bits + ' bits', 'Thanks for the fuel, ' + user + '!');
+    },
+    raid({ user, viewers }) {
+      setSlot('raid', user, viewers + ' viewers', true);
+      announce('raid', 'Incoming raid · ' + viewers + ' viewers', user + ' is landing in the hangar!');
+    },
+  };
+
+  if (CTC.demo) {
+    setSlot('sub', 'SkyCaptain42', '6 mo', false);
+    setSlot('cheer', 'FlapsFifteen', '500 bits', false);
+    setSlot('raid', 'HeavyMetalPilot', '38 viewers', false);
+  } else {
+    CTC.twitch.connect(CTC.cfg.twitchChannel, handlers);
+  }
+</script>
+</body>
+</html>

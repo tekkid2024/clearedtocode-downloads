@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taglines</title>
+<link rel="stylesheet" href="css/overlay.css">
+</head>
+<body>
+<!-- OBS browser source size: 1168 x 136 -->
+<div class="taglines" id="list"></div>
+<script src="../config.js"></script>
+<script src="js/common.js"></script>
+<script>
+  const icons = [CTC.icons.code, CTC.icons.sliders, CTC.icons.climb];
+  document.getElementById('list').innerHTML = CTC.cfg.taglines.slice(0, 3).map((t, i) =>
+    '<div class="tag panel"><div class="tag-icon">' + icons[i] + '</div><div>' +
+    '<div class="tag-num">0' + (i + 1) + '</div>' +
+    '<div class="tag-word">' + CTC.esc(t.word) + '</div>' +
+    '<div class="tag-text">' + CTC.esc(t.text) + '</div></div></div>').join('');
+</script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live chat</title>
+<link rel="stylesheet" href="css/overlay.css">
+</head>
+<body>
+<!-- OBS browser source: any size (420 x 560 and 656 x 380 are used). -->
+<div class="chat panel">
+  <div class="panel-head">
+    <div class="panel-title">Live chat</div>
+    <div class="status" id="status"><i></i><span id="chan"></span></div>
+  </div>
+  <div class="chat-list" id="list">
+    <div class="chat-empty" id="empty">Chat is quiet — say hi in chat!</div>
+  </div>
+</div>
+<script src="../config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/twitch.js"></script>
+<script>
+  const { cfg, esc } = CTC;
+  const list = document.getElementById('list');
+  const empty = document.getElementById('empty');
+  const statusEl = document.getElementById('status');
+  const chan = document.getElementById('chan');
+  const hidden = new Set(cfg.chat.hideBots.map((b) => b.toLowerCase()));
+
+  chan.textContent = cfg.twitchChannel ? 'twitch.tv/' + cfg.twitchChannel.toLowerCase() : 'set twitchChannel in config.js';
+
+  // Keep Twitch name colours readable on the dark panel.
+  const PALETTE = ['#46d2ff', '#ffb547', '#3ddc97', '#ff8fa3', '#c79bff', '#7ee0ff', '#ffd27a'];
+  function nameColor(login, color) {
+    if (!/^#[0-9a-f]{6}$/i.test(color || '')) {
+      let h = 0;
+      for (const ch of login) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+      return PALETTE[h % PALETTE.length];
+    }
+    const n = parseInt(color.slice(1), 16);
+    let r = n >> 16, g = (n >> 8) & 255, b = n & 255;
+    const lum = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+    if (lum < 0.5) {
+      const k = (0.5 - lum) * 1.4;
+      r = Math.round(r + (255 - r) * k); g = Math.round(g + (255 - g) * k); b = Math.round(b + (255 - b) * k);
+    }
+    return 'rgb(' + r + ',' + g + ',' + b + ')';
+  }
+
+  const BADGES = [['broadcaster', 'capt', 'CAPT'], ['moderator', 'atc', 'ATC'], ['vip', 'vip', 'VIP'], ['subscriber', 'crew', 'CREW'], ['founder', 'crew', 'CREW']];
+  function badgeHTML(badges) {
+    const have = new Set(badges.split(',').map((b) => b.split('/')[0]));
+    const out = [];
+    for (const [key, cls, label] of BADGES) {
+      if (have.has(key) && !out.some((o) => o.includes('>' + label + '<'))) out.push('<span class="badge ' + cls + '">' + label + '</span>');
+    }
+    return out.slice(0, 2).join('');
+  }
+
+  // Twitch gives emote positions as character (code point) ranges.
+  function textHTML(text, emotes) {
+    const chars = Array.from(text);
+    const ranges = [];
+    if (emotes) {
+      for (const part of emotes.split('/')) {
+        const [id, pos] = part.split(':');
+        if (!pos) continue;
+        for (const r of pos.split(',')) {
+          const [s, e] = r.split('-').map(Number);
+          ranges.push([s, e, id]);
+        }
+      }
+      ranges.sort((a, b) => a[0] - b[0]);
+    }
+    let html = '';
+    let i = 0;
+    for (const [s, e, id] of ranges) {
+      if (s < i) continue;
+      html += esc(chars.slice(i, s).join(''));
+      const name = esc(chars.slice(s, e + 1).join(''));
+      html += '<img class="emote" alt="' + name + '" src="https://static-cdn.jtvnw.net/emoticons/v2/' + encodeURIComponent(id) + '/default/dark/2.0">';
+      i = e + 1;
+    }
+    return html + esc(chars.slice(i).join(''));
+  }
+
+  function prune() {
+    const top = list.getBoundingClientRect().top;
+    let first = list.querySelector('.msg');
+    while (first && first.getBoundingClientRect().bottom < top) {
+      first.remove();
+      first = list.querySelector('.msg');
+    }
+    const all = list.querySelectorAll('.msg');
+    for (let i = 0; i < all.length - cfg.chat.maxMessages; i++) all[i].remove();
+  }
+
+  function add(el) {
+    empty.remove();
+    list.appendChild(el);
+    prune();
+  }
+
+  function addMessage(m) {
+    if (hidden.has(m.login)) return;
+    if (cfg.chat.hideCommands && m.text.trim().startsWith('!')) return;
+    const el = document.createElement('div');
+    el.className = 'msg' + (m.action ? ' action' : '');
+    el.dataset.id = m.id || '';
+    el.dataset.login = m.login;
+    el.style.setProperty('--uc', nameColor(m.login, m.color));
+    el.innerHTML = badgeHTML(m.badges) + '<span class="name">' + esc(m.user) + '</span>' +
+      (m.bits ? '<span class="bits">◆ ' + m.bits + '</span>' : '') +
+      '<span class="text">' + textHTML(m.text, m.emotes) + '</span>';
+    add(el);
+  }
+
+  function addNotice(n) {
+    const el = document.createElement('div');
+    el.className = 'msg notice';
+    el.innerHTML = '<span class="text">' + esc(n.text) + '</span>';
+    add(el);
+  }
+
+  function remove(r) {
+    for (const el of list.querySelectorAll('.msg')) {
+      if (r.all || (r.id && el.dataset.id === r.id) || (r.login && el.dataset.login === r.login)) el.remove();
+    }
+  }
+
+  function status(s) {
+    statusEl.classList.toggle('on', s === 'online');
+  }
+
+  if (CTC.demo) {
+    status('online');
+    const demo = [
+      { login: 'skycaptain42', user: 'SkyCaptain42', color: '#1E90FF', badges: 'subscriber/12', text: 'Cleared for takeoff! What are we building today?' },
+      { login: 'flapsfifteen', user: 'FlapsFifteen', color: '#9ACD32', badges: 'moderator/1', text: 'The new linker build is so much faster 🔥' },
+      { login: 'heavymetalpilot', user: 'HeavyMetalPilot', color: '#FF7F50', badges: '', text: 'Does it work with MSFS 2024 community folders?' },
+      { login: 'clearedtocode', user: 'ClearedToCode', color: '#FFB547', badges: 'broadcaster/1', text: 'Yep — 2020 and 2024 both. Testing it live in a sec.' },
+      { login: 'atc_tower', user: 'ATC_Tower', color: '#8A2BE2', badges: 'vip/1', text: 'Winds 270 at 8, runway 28L 😄', bits: 100 },
+    ];
+    demo.forEach((m, i) => addMessage(Object.assign({ id: 'd' + i, emotes: '', action: false, bits: 0 }, m)));
+  } else {
+    CTC.twitch.connect(cfg.twitchChannel, { message: addMessage, notice: addNotice, remove, status });
+  }
+</script>
+</body>
+</html>

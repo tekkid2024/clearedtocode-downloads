@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brand badge</title>
+<link rel="stylesheet" href="css/overlay.css">
+</head>
+<body>
+<!-- OBS browser source size: 460 x 96 -->
+<div class="brand panel">
+  <div class="brand-mark" id="mark"></div>
+  <div>
+    <div class="brand-name" id="name"></div>
+    <div class="brand-sub kicker"><span class="live-dot"></span><span id="tagline"></span></div>
+  </div>
+</div>
+<script src="../config.js"></script>
+<script src="js/common.js"></script>
+<script>
+  document.getElementById('mark').innerHTML = CTC.icons.plane;
+  document.getElementById('name').innerHTML = CTC.brandHTML();
+  document.getElementById('tagline').textContent = CTC.cfg.brandTagline;
+</script>
+</body>
+</html>

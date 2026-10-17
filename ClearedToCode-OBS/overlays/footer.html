@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Footer</title>
+<link rel="stylesheet" href="css/overlay.css">
+</head>
+<body>
+<!-- OBS browser source size: 1920 x 56 -->
+<div class="footer">
+  <div class="socials" id="socials"></div>
+  <div class="ticker" id="ticker"></div>
+  <div class="clocks">
+    <div><span class="kicker">Local</span><span id="local"></span></div>
+    <div><span class="kicker">Zulu</span><span class="zulu" id="zulu"></span></div>
+  </div>
+</div>
+<script src="../config.js"></script>
+<script src="js/common.js"></script>
+<script>
+  const cfg = CTC.cfg;
+  document.getElementById('socials').innerHTML = cfg.socials.map((s) =>
+    '<div class="social"><span class="kicker">' + CTC.esc(s.label) + '</span>' + CTC.esc(s.handle) + '</div>').join('');
+
+  const ticker = document.getElementById('ticker');
+  ticker.innerHTML = cfg.footerMessages.map((m) => '<span>' + CTC.esc(m) + '</span>').join('');
+  const lines = ticker.children;
+  let n = 0;
+  function rotate() {
+    if (!lines.length) return;
+    for (const el of lines) el.classList.remove('on');
+    lines[n % lines.length].classList.add('on');
+    n++;
+  }
+  rotate();
+  setInterval(rotate, 9000);
+
+  function tick() {
+    const d = new Date();
+    document.getElementById('local').textContent = d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+    document.getElementById('zulu').textContent = CTC.pad(d.getUTCHours()) + ':' + CTC.pad(d.getUTCMinutes()) + 'Z';
+  }
+  tick();
+  setInterval(tick, 5000);
+</script>
+</body>
+</html>

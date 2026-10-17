@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Camera frame</title>
+<link rel="stylesheet" href="css/overlay.css">
+</head>
+<body>
+<!-- OBS browser source size: 400 x 300 (small) or 656 x 460 (large).
+     The webcam sits under the clear window: 8 px in from the top-left. -->
+<div class="cam-window"></div>
+<div class="plate">
+  <div class="plate-text">
+    <div class="plate-name" id="name"></div>
+    <div class="plate-role" id="role"></div>
+  </div>
+  <div class="on-air"><span class="live-dot"></span>ON AIR</div>
+</div>
+<script src="../config.js"></script>
+<script src="js/common.js"></script>
+<script>
+  document.getElementById('name').textContent = CTC.cfg.name;
+  document.getElementById('role').textContent = CTC.cfg.role;
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Main screen frame</title>
+<link rel="stylesheet" href="css/overlay.css">
+</head>
+<body>
+<!-- OBS browser source size: 1168 x 708. Screen capture sits under the
+     clear window: 8 px from the left, 52 px from the top, 1152 x 648. -->
+<div class="screen-head">
+  <div class="dots"><i></i><i></i><i></i></div>
+  <div class="screen-title" id="title"></div>
+  <div class="chip"><span class="live-dot"></span>LIVE BUILD</div>
+</div>
+<div class="screen-window"></div>
+<script src="../config.js"></script>
+<script src="js/common.js"></script>
+<script>
+  const t = CTC.cfg.screenTitle;
+  const cut = t.indexOf('—');
+  document.getElementById('title').innerHTML = cut > 0
+    ? '<b>' + CTC.esc(t.slice(0, cut).trim()) + '</b> — ' + CTC.esc(t.slice(cut + 1).trim())
+    : '<b>' + CTC.esc(t) + '</b>';
+</script>
+</body>
+</html>
